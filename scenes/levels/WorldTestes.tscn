@@ -1,10 +1,11 @@
-[gd_scene load_steps=10 format=4 uid="uid://fmpa756nwafp"]
+[gd_scene load_steps=11 format=4 uid="uid://fmpa756nwafp"]
 
 [ext_resource type="Texture2D" uid="uid://6ea5frpmb73f" path="res://assets/32rogues/tiles.png" id="1_qbxk5"]
 [ext_resource type="Texture2D" uid="uid://clxqc4hjskktt" path="res://assets/32rogues/items.png" id="2_q5g71"]
 [ext_resource type="Texture2D" uid="uid://bnclh7kff40tp" path="res://assets/32rogues/animals.png" id="3_0ihrh"]
 [ext_resource type="PackedScene" uid="uid://dqe5jwnnkuu62" path="res://player.tscn" id="4_568ye"]
 [ext_resource type="PackedScene" uid="uid://n4qduriikbhb" path="res://scenes/characters/Enemies/patinho.tscn" id="5_utwlj"]
+[ext_resource type="Script" path="res://classes/enemy.gd" id="6_fxugf"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_mr535"]
 texture = ExtResource("1_qbxk5")
@@ -657,3 +658,6 @@ position = Vector2(609, 368)
 
 [node name="Patinho" parent="." instance=ExtResource("5_utwlj")]
 position = Vector2(617, 273)
+
+[node name="Enemy" type="Node2D" parent="."]
+script = ExtResource("6_fxugf")
