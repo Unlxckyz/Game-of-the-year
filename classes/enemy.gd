@@ -20,7 +20,12 @@ class_name Enemy
 @export var animation_player : AnimationPlayer
 
 func _ready() -> void:
-	pass
+	health_bar.init_health(health)
 
 func _process(delta: float) -> void:
 	pass
+func take_damage(damage):
+	health -= damage
+	if health < 0:
+		queue_free()
+	health_bar.health = health

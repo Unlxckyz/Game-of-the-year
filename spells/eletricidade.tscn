@@ -90,4 +90,6 @@ libraries = {
 "": SubResource("AnimationLibrary_s2rb3")
 }
 
+[node name="Timer" type="Timer" parent="."]
+
 [connection signal="body_entered" from="Animals/Eletric" to="." method="_on_eletric_body_entered"]

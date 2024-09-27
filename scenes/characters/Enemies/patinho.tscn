@@ -1,10 +1,26 @@
-[gd_scene load_steps=7 format=3 uid="uid://n4qduriikbhb"]
+[gd_scene load_steps=9 format=3 uid="uid://n4qduriikbhb"]
 
 [ext_resource type="Script" path="res://patinho.gd" id="1_6mflt"]
 [ext_resource type="Texture2D" uid="uid://bnclh7kff40tp" path="res://assets/32rogues/animals.png" id="2_w8v6p"]
+[ext_resource type="PackedScene" uid="uid://dqwisknycuqg5" path="res://scenes/ui/health_component.tscn" id="3_7m618"]
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_u5wh4"]
-radius = 58.6941
+[sub_resource type="CircleShape2D" id="CircleShape2D_mw2cg"]
+radius = 41.1096
+
+[sub_resource type="Animation" id="Animation_dmmai"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.261799]
+}
 
 [sub_resource type="Animation" id="Animation_uhgtg"]
 resource_name = "idle"
@@ -23,29 +39,25 @@ tracks/0/keys = {
 "values": [0.261799, -0.261799, 0.261799]
 }
 
-[sub_resource type="Animation" id="Animation_dmmai"]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Sprite2D:rotation")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [0.261799]
-}
-
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_vaism"]
 _data = {
 "RESET": SubResource("Animation_dmmai"),
 "idle": SubResource("Animation_uhgtg")
 }
 
-[node name="Patinho" type="CharacterBody2D"]
+[sub_resource type="CircleShape2D" id="CircleShape2D_u5wh4"]
+radius = 56.0
+
+[node name="Patinho" type="CharacterBody2D" node_paths=PackedStringArray("health_bar") groups=["Enemy"]]
+collision_layer = 2
+collision_mask = 2
+motion_mode = 1
 script = ExtResource("1_6mflt")
+health_bar = NodePath("HealthComponent")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(-10, 10)
+shape = SubResource("CircleShape2D_mw2cg")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 rotation = 0.261799
@@ -54,11 +66,20 @@ texture = ExtResource("2_w8v6p")
 region_enabled = true
 region_rect = Rect2(69.5451, 458.54, 22.7821, 21.1792)
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(-1, 0)
-shape = SubResource("CircleShape2D_u5wh4")
-
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
 "": SubResource("AnimationLibrary_vaism")
 }
+
+[node name="Area2D" type="Area2D" parent="."]
+
+[node name="collsion_area" type="CollisionShape2D" parent="Area2D"]
+position = Vector2(-10, 1)
+shape = SubResource("CircleShape2D_u5wh4")
+debug_color = Color(0.770103, 1.44392e-06, 0.396343, 0.42)
+
+[node name="HealthComponent" parent="." instance=ExtResource("3_7m618")]
+offset_left = -62.0
+offset_right = 34.0
+
+[connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]

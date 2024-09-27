@@ -18,3 +18,8 @@ class_name Spell
 
 func _process(delta: float) -> void:
 	position += direction.normalized() * delta * speed
+func checkColide(body):
+	if body.is_in_group("Enemy"):
+		if body.has_method("take_damage"):
+			body.take_damage(base_damage)
+			queue_free()

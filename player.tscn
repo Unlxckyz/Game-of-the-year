@@ -13,3 +13,7 @@ region_rect = Rect2(65.7256, 0.344645, 28.2483, 30.4028)
 
 [node name="Camera2D" type="Camera2D" parent="."]
 zoom = Vector2(2.5, 2.5)
+
+[node name="Timer" type="Timer" parent="."]
+
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

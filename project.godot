@@ -19,6 +19,10 @@ config/icon="res://icon.svg"
 
 project/assembly_name="Game Of The Year"
 
+[global_group]
+
+Enemy=""
+
 [input]
 
 up={

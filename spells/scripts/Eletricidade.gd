@@ -1,6 +1,5 @@
 extends Spell
 
-
 func _ready():
 	base_damage = 10
 	speed = 100
@@ -10,6 +9,4 @@ func _ready():
 
 
 func _on_eletric_body_entered(body):
-	if body.is_in_group("enemy"):
-		if body.has_method("take_damage"):
-			body.take_damage(base_damage)
+	checkColide(body)
