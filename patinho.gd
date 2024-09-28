@@ -20,8 +20,6 @@ func shoke():
 	animation.play("hurt_shoke")
 	timer.start()
 
-func _on_effect_timeout() -> void:
-	speed = 50
 
 func _on_health_component_value_changed(value: float) -> void:
 	pass # Replace with function body.

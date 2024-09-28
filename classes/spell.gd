@@ -57,7 +57,7 @@ func create_elemental_effect(element_type):
 			"damage_over_time": 0,
 			"effect_duration": effect_duration,
 			"visual_effect": electric_preload,
-			"animation": "hurt_shock"
+			"animation": "hurt_shoke"
 		}
 	elif element_type == "fire":
 		effect = {
@@ -87,6 +87,6 @@ func apply_visual_effect(target, effect_data):
 func apply_damage_over_time(target, effect_data):
 	if effect_data.has("damage_over_time"):
 		target.timer.wait_time = effect_data["effect_duration"]
-		target.timer.start()
+		
 		if target.currentHealth > 0:
 			target.take_damage(effect_data["damage_over_time"])

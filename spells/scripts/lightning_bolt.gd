@@ -11,5 +11,7 @@ func _ready():
 	elemental_type = "electric"
 
 
-func _on_electric_body_entered(body):
+
+
+func _on_eletric_body_entered(body: Node2D) -> void:
 	checkColide(body)
