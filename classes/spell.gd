@@ -54,7 +54,7 @@ func create_elemental_effect(element_type):
 	if element_type == "electric":
 		effect = {
 			"speed_reduction": 0,
-			"damage_over_time": 0,
+			"damage_over_time": damage_over_time,
 			"effect_duration": effect_duration,
 			"visual_effect": electric_preload,
 			"animation": "hurt_shoke"
@@ -81,12 +81,11 @@ func apply_visual_effect(target, effect_data):
 	visual_instance.position = target.global_position
 	visual_instance.one_shot = true
 	get_parent().add_child(visual_instance)
-	
 	target.animation.play(effect_data["animation"])
 
 func apply_damage_over_time(target, effect_data):
 	if effect_data.has("damage_over_time"):
 		target.timer.wait_time = effect_data["effect_duration"]
 		
-		if target.currentHealth > 0:
-			target.take_damage(effect_data["damage_over_time"])
+		
+		target.damageOverTime(target,damage_over_time,effect_duration)	

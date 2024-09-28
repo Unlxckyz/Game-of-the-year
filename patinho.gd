@@ -3,10 +3,9 @@ extends Enemy
 @onready var animation = $AnimationPlayer
 @onready var health_component = $HealthComponent
 @onready var player = get_tree().get_first_node_in_group("Player")
-@onready var timer = $Effect
 
 func _init():
-	maxHealth = 500
+	maxHealth = 50
 	health_bar = health_component
 	speed = 50
 	
@@ -18,7 +17,6 @@ func _process(delta):
 	
 func shoke():
 	animation.play("hurt_shoke")
-	timer.start()
 
 
 func _on_health_component_value_changed(value: float) -> void:
