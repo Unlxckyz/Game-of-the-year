@@ -12,12 +12,12 @@ func _process(delta):
 	handleCasting()
 	
 
-func shoot(projectile_scene, target_position):
+func shoot(projectile_scene):
 	var projectile_instance = projectile_scene.instantiate()
-	var direction = (target_position - global_position).normalized()
+	var direction = (get_global_mouse_position() - global_position).normalized()
 	
 	projectile_instance.position = global_position
-	projectile_instance.direction = target_position
+	projectile_instance.direction = get_local_mouse_position()
 	projectile_instance.rotation = direction.angle()
 	
 	var animation_player = projectile_instance.get_node("animation")
@@ -27,6 +27,12 @@ func shoot(projectile_scene, target_position):
 	canShoot = false
 	timer.start()
 
+#func shoot(spell):
+	#var eletricidade
+	#var angle = (get_global_mouse_position() - global_position).normalized()
+	#var animation = eletricidade.get_node("animation")
+	#animation.play("shoot")
+	#
 func handleMovement():
 	var direction = Input.get_vector("left","right","up","down")
 	if direction.x > 0:
@@ -42,10 +48,10 @@ func handleMovement():
 func handleCasting():
 	if Input.is_action_pressed("shoot"):
 		if canShoot:
-			shoot(lightning_bolt_preload, get_global_mouse_position())
+			shoot(lightning_bolt_preload)
 	if Input.is_action_pressed("shoot_fire"):
 		if canShoot:
-			shoot(fireblast_preload, get_global_mouse_position())
+			shoot(fireblast_preload)
 
 func _on_timer_timeout() -> void:
 	canShoot = true

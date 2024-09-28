@@ -12,7 +12,6 @@ func _init():
 	
 	
 
-
 func _process(delta):
 	var direction = (player.global_position - global_position).normalized()
 	position += direction * speed * delta
