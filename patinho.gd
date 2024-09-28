@@ -6,17 +6,20 @@ extends Enemy
 @onready var timer = $Effect
 
 func _init():
-	health = 50
+	health = 5000
 	health_bar = health_bar_bar
 	speed = 50
+	
+	
 
 
 func _process(delta):
 	var direction = (player.global_position - global_position).normalized()
 	position += direction * speed * delta
 	
-
+func shoke():
+	animation.play("hurt_shoke")
+	timer.start()
 
 func _on_effect_timeout() -> void:
-	animation.play("hurt")
 	speed = 50

@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bme35xsdyqdqv"
-path="res://.godot/imported/New Piskel (1).png-c858deb3d4043d768370ff30a6357202.ctex"
+uid="uid://cxui2fxx2d3wj"
+path="res://.godot/imported/Yellow Effect Bullet Impact Explosion 32x32.png-443699fe4e52999c847e120c3b98c1b7.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://spells/scripts/New Piskel (1).png"
-dest_files=["res://.godot/imported/New Piskel (1).png-c858deb3d4043d768370ff30a6357202.ctex"]
+source_file="res://spells/Yellow Effect Bullet Impact Explosion 32x32.png"
+dest_files=["res://.godot/imported/Yellow Effect Bullet Impact Explosion 32x32.png-443699fe4e52999c847e120c3b98c1b7.ctex"]
 
 [params]
 

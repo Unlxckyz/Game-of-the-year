@@ -1,7 +1,8 @@
 extends CharacterBody2D
 @onready var sprite = $Rogues
 var speed = 200
-var eletricidade_preload = preload("res://spells/eletricidade.tscn")
+var eletricidade_preload = preload("res://spells/lightning_bolt.tscn")
+var fireblast_preload = preload("res://spells/fire_blast.tscn")
 var canShoot = true
 @onready var timer = $Timer
 func _process(delta):
@@ -18,11 +19,20 @@ func _process(delta):
 	move_and_slide()
 	if Input.is_action_pressed("shoot"):
 		if canShoot:
-			shoot()
+			shoot(eletricidade_preload)
+	if Input.is_action_pressed("shoot_fire"):
+		if canShoot:
+			shoot(fireblast_preload)
+		
+		
 		
 
-func shoot():
-	var eletricidade = eletricidade_preload.instantiate()
+func shoot(spell):
+	var eletricidade
+	if spell == fireblast_preload:
+		eletricidade = fireblast_preload.instantiate()
+	if spell == eletricidade_preload:
+		eletricidade = eletricidade_preload.instantiate()
 	var angle = (get_global_mouse_position() - global_position).normalized()
 	var animation = eletricidade.get_node("animation")
 	animation.play("shoot")

@@ -1,0 +1,73 @@
+[gd_scene load_steps=7 format=3 uid="uid://npsuwkyfo22e"]
+
+[ext_resource type="Script" path="res://spells/fire_blast.gd" id="1_vs14q"]
+[ext_resource type="Texture2D" uid="uid://dswymxedbrhxd" path="res://spells/fire.png" id="2_ylak5"]
+
+[sub_resource type="Animation" id="Animation_w08be"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Fire:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
+[sub_resource type="Animation" id="Animation_th12a"]
+resource_name = "fire"
+length = 0.80002
+loop_mode = 1
+step = 0.2
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Fire:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.4, 0.6),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_nraqi"]
+_data = {
+"RESET": SubResource("Animation_w08be"),
+"shoot": SubResource("Animation_th12a")
+}
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_w3rvp"]
+radius = 1.42387
+
+[node name="Fire Blast" type="Node2D"]
+script = ExtResource("1_vs14q")
+
+[node name="Fire" type="Sprite2D" parent="."]
+position = Vector2(10, 5)
+rotation = 3.14159
+texture = ExtResource("2_ylak5")
+hframes = 4
+region_enabled = true
+region_rect = Rect2(352.026, 3.95712, 127.296, 21.0282)
+
+[node name="animation" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_nraqi")
+}
+
+[node name="Area2D" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+position = Vector2(15, 5)
+scale = Vector2(-8.4711, -6.95157)
+shape = SubResource("CircleShape2D_w3rvp")
+
+[connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]

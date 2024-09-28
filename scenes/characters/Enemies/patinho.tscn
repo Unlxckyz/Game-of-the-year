@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://n4qduriikbhb"]
+[gd_scene load_steps=14 format=3 uid="uid://n4qduriikbhb"]
 
 [ext_resource type="Script" path="res://patinho.gd" id="1_6mflt"]
 [ext_resource type="Shader" path="res://scenes/characters/Enemies/hit_blink.gdshader" id="1_y7yax"]
@@ -99,10 +99,28 @@ tracks/0/keys = {
 "values": [0.261799, -0.261799, 0.261799]
 }
 
+[sub_resource type="Animation" id="Animation_48nd3"]
+resource_name = "hurt_shoke"
+length = 4.0
+step = 1.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:material:shader_parameter/blink_intensity")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1, 2, 3, 4),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [0.0, 1.0, 0.0, 1.0, 0.0]
+}
+
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_vaism"]
 _data = {
 "RESET": SubResource("Animation_dmmai"),
 "hurt": SubResource("Animation_q1y0c"),
+"hurt_shoke": SubResource("Animation_48nd3"),
 "idle": SubResource("Animation_uhgtg")
 }
 
@@ -134,7 +152,7 @@ libraries = {
 "": SubResource("AnimationLibrary_vaism")
 }
 playback_auto_capture = false
-speed_scale = 4.0
+speed_scale = 8.0
 
 [node name="Area2D" type="Area2D" parent="."]
 
@@ -148,6 +166,8 @@ offset_left = -62.0
 offset_right = 34.0
 
 [node name="Effect" type="Timer" parent="."]
+wait_time = 4.0
+one_shot = true
 
 [connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]
 [connection signal="timeout" from="Effect" to="." method="_on_effect_timeout"]
