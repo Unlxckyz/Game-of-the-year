@@ -27,12 +27,6 @@ func shoot(projectile_scene):
 	canShoot = false
 	timer.start()
 
-#func shoot(spell):
-	#var eletricidade
-	#var angle = (get_global_mouse_position() - global_position).normalized()
-	#var animation = eletricidade.get_node("animation")
-	#animation.play("shoot")
-	#
 func handleMovement():
 	var direction = Input.get_vector("left","right","up","down")
 	if direction.x > 0:
