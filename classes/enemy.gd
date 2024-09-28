@@ -1,6 +1,5 @@
 extends Node2D
 class_name Enemy
-
 @export var health : float
 @export var health_bar : HealthBar
 @export var atk : float
@@ -26,6 +25,7 @@ func _process(delta: float) -> void:
 	pass
 func take_damage(damage):
 	health -= damage
-	if health < 0:
+	if health <= 0:
 		queue_free()
 	health_bar.health = health
+

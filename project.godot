@@ -22,6 +22,7 @@ project/assembly_name="Game Of The Year"
 [global_group]
 
 Enemy=""
+Player=""
 
 [input]
 

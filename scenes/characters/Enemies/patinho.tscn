@@ -1,11 +1,18 @@
-[gd_scene load_steps=9 format=3 uid="uid://n4qduriikbhb"]
+[gd_scene load_steps=13 format=3 uid="uid://n4qduriikbhb"]
 
 [ext_resource type="Script" path="res://patinho.gd" id="1_6mflt"]
+[ext_resource type="Shader" path="res://scenes/characters/Enemies/hit_blink.gdshader" id="1_y7yax"]
 [ext_resource type="Texture2D" uid="uid://bnclh7kff40tp" path="res://assets/32rogues/animals.png" id="2_w8v6p"]
 [ext_resource type="PackedScene" uid="uid://dqwisknycuqg5" path="res://scenes/ui/health_component.tscn" id="3_7m618"]
 
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_owijb"]
+
 [sub_resource type="CircleShape2D" id="CircleShape2D_mw2cg"]
 radius = 41.1096
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_mneij"]
+shader = ExtResource("1_y7yax")
+shader_parameter/blink_intensity = 0.0
 
 [sub_resource type="Animation" id="Animation_dmmai"]
 length = 0.001
@@ -20,6 +27,59 @@ tracks/0/keys = {
 "transitions": PackedFloat32Array(1),
 "update": 0,
 "values": [0.261799]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Sprite2D:material")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [SubResource("ShaderMaterial_mneij")]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Sprite2D:material:shader_parameter/blink_intensity")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+
+[sub_resource type="Animation" id="Animation_q1y0c"]
+resource_name = "hurt"
+length = 1.0001
+step = 1.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:material")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [SubResource("ShaderMaterial_mneij")]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Sprite2D:material:shader_parameter/blink_intensity")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [1.0, 0.0]
 }
 
 [sub_resource type="Animation" id="Animation_uhgtg"]
@@ -42,6 +102,7 @@ tracks/0/keys = {
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_vaism"]
 _data = {
 "RESET": SubResource("Animation_dmmai"),
+"hurt": SubResource("Animation_q1y0c"),
 "idle": SubResource("Animation_uhgtg")
 }
 
@@ -49,6 +110,7 @@ _data = {
 radius = 56.0
 
 [node name="Patinho" type="CharacterBody2D" node_paths=PackedStringArray("health_bar") groups=["Enemy"]]
+material = SubResource("ShaderMaterial_owijb")
 collision_layer = 2
 collision_mask = 2
 motion_mode = 1
@@ -60,6 +122,7 @@ position = Vector2(-10, 10)
 shape = SubResource("CircleShape2D_mw2cg")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
+material = SubResource("ShaderMaterial_mneij")
 rotation = 0.261799
 scale = Vector2(5.21429, 5.21429)
 texture = ExtResource("2_w8v6p")
@@ -70,6 +133,8 @@ region_rect = Rect2(69.5451, 458.54, 22.7821, 21.1792)
 libraries = {
 "": SubResource("AnimationLibrary_vaism")
 }
+playback_auto_capture = false
+speed_scale = 4.0
 
 [node name="Area2D" type="Area2D" parent="."]
 
@@ -82,4 +147,7 @@ debug_color = Color(0.770103, 1.44392e-06, 0.396343, 0.42)
 offset_left = -62.0
 offset_right = 34.0
 
+[node name="Effect" type="Timer" parent="."]
+
 [connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]
+[connection signal="timeout" from="Effect" to="." method="_on_effect_timeout"]
