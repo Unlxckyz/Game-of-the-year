@@ -47,7 +47,7 @@ func apply_elemental(body,elemental):
 	if elemental == "electric":
 		body.speed = 0
 		body.timer.wait_time = effect_duration
-		if body.health > 0:
+		if body.currentHealth > 0:
 			electric_effect.lifetime = effect_duration
 			body.animation.play("hurt_shock")
 			electric_effect.position = body.global_position
@@ -61,10 +61,11 @@ func apply_elemental(body,elemental):
 		#tickTimer.wait_time = 1.0
 		#tickTimer.one_shot = false
 		#tickTimer.start()
-		if body.health > 0:
+		if body.currentHealth > 0:
 			fire_effect.lifetime = effect_duration
 			body.animation.play("hurt_shock")
 			fire_effect.position = body.global_position
 			fire_effect.one_shot = true
 			body.take_damage(damage_over_time)
+			print(body.currentHealth)
 			get_parent().add_child(fire_effect)

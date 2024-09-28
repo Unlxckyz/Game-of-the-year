@@ -1,6 +1,8 @@
 extends Node2D
 class_name Enemy
-@export var health : float
+
+@export var maxHealth : float
+@export var currentHealth : float
 @export var health_bar : HealthBar
 @export var atk : float
 @export var damage_modifiers : Dictionary = {}
@@ -18,14 +20,17 @@ class_name Enemy
 @export var is_elite: bool
 @export var animation_player : AnimationPlayer
 
+signal healthChanged
+
 func _ready() -> void:
-	health_bar.init_health(health)
+	health_bar.init_health(maxHealth)
+	currentHealth = maxHealth
 
 func _process(delta: float) -> void:
 	pass
 
 func take_damage(damage):
-	health -= damage
-	if health <= 0:
+	currentHealth -= damage
+	if currentHealth <= 0:
 		queue_free()
-	health_bar.value = health
+	health_bar.value = currentHealth
