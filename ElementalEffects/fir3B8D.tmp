@@ -1,0 +1,29 @@
+[gd_scene load_steps=3 format=3 uid="uid://xig3hmk4uspw"]
+
+[ext_resource type="Texture2D" uid="uid://cxui2fxx2d3wj" path="res://spells/Yellow Effect Bullet Impact Explosion 32x32.png" id="1_gucu5"]
+[ext_resource type="Script" path="res://spells/fire_blast.gd" id="2_b2p7n"]
+
+[node name="fire_effect" type="CPUParticles2D"]
+scale = Vector2(4, 4)
+amount = 10
+lifetime = 0.4
+speed_scale = 0.5
+explosiveness = 1.0
+fract_delta = false
+texture = ExtResource("1_gucu5")
+particle_flag_align_y = true
+spread = 180.0
+gravity = Vector2(20, 50)
+initial_velocity_min = 20.0
+initial_velocity_max = 40.0
+angular_velocity_min = 200.0
+angular_velocity_max = 720.0
+tangential_accel_max = 100.0
+damping_max = 82.432
+angle_min = 720.0
+angle_max = 720.0
+scale_amount_min = 0.4
+scale_amount_max = 0.8
+hue_variation_min = 1.0
+hue_variation_max = 1.0
+script = ExtResource("2_b2p7n")

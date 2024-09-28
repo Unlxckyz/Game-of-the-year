@@ -30,63 +30,41 @@ func checkColide(body):
 				apply_knockback_force(body)
 			body.animation.play("hurt")
 			if elemental_type:
-				apply_elemental_effect(body,elemental_type)
+				apply_elemental(body,elemental_type)
 			
 				
 			#aqui é adicionado por exemplo efeitos a mais. farei o knockback de exemplo
 			
 			queue_free()
 
-func apply_knockback_force(target):
-	var knockback_direction = (target.global_position - global_position).normalized()
-	target.position += knockback_direction * knockback_force * get_process_delta_time()
+func apply_knockback_force(body):
+	var knockback_direction = (body.global_position - global_position).normalized()
+	body.position += knockback_direction * knockback_force * get_process_delta_time()
 
-func apply_elemental_effect(target, element_type):
-	var effect_data = create_elemental_effect(element_type)
-	
-	if effect_data:
-		apply_status_effect(target, effect_data)
-		apply_visual_effect(target, effect_data)
-		apply_damage_over_time(target, effect_data)
-
-func create_elemental_effect(element_type):
-	var effect = {}
-	if element_type == "electric":
-		effect = {
-			"speed_reduction": 0,
-			"damage_over_time": 0,
-			"effect_duration": effect_duration,
-			"visual_effect": electric_preload,
-			"animation": "hurt_shock"
-		}
-	elif element_type == "fire":
-		effect = {
-			"speed_reduction": 0,
-			"damage_over_time": damage_over_time,
-			"effect_duration": effect_duration,
-			"visual_effect": fire_preload,
-			"animation": "hurt_burn"
-		}
-	return effect
-
-func apply_status_effect(target, effect_data):
-	if effect_data.has("speed_reduction"):
-		target.speed -= effect_data["speed_reduction"]
-	if target.has_method("apply_status"):
-		target.apply_status(effect_data)
-
-func apply_visual_effect(target, effect_data):
-	var visual_instance = effect_data["visual_effect"].instantiate()
-	visual_instance.lifetime = effect_data["effect_duration"]
-	visual_instance.position = target.global_position
-	visual_instance.one_shot = true
-	get_parent().add_child(visual_instance)
-	
-	target.animation.play(effect_data["animation"])
-
-func apply_damage_over_time(target, effect_data):
-	if effect_data.has("damage_over_time"):
-		target.timer.wait_time = effect_data["effect_duration"]
-		target.timer.start()
-		if target.currentHealth > 0:
-			target.take_damage(effect_data["damage_over_time"])
+func apply_elemental(body,elemental):
+	var electric_effect = electric_preload.instantiate()
+	var fire_effect = fire_preload.instantiate()
+	if elemental == "electric":
+		body.speed = 0
+		body.timer.wait_time = effect_duration
+		if body.currentHealth > 0:
+			electric_effect.lifetime = effect_duration
+			body.animation.play("hurt_shoke")
+			electric_effect.position = body.global_position
+			electric_effect.one_shot = true
+			get_parent().add_child(electric_effect)
+			
+		body.shoke()
+	if elemental == "fire":
+		
+		#var tickTimer = Timer.new()
+		#tickTimer.wait_time = 1.0
+		#tickTimer.one_shot = false
+		#tickTimer.start()
+		if body.currentHealth > 0:
+			fire_effect.damageOverTime(body,damage_over_time,effect_duration)
+			fire_effect.lifetime = effect_duration
+			body.animation.play("hurt_shoke")
+			fire_effect.position = body.global_position
+			print(body.currentHealth)
+			get_parent().add_child(fire_effect)
