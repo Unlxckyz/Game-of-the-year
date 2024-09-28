@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://dwurp5opk4do5"]
 
-[ext_resource type="Texture2D" uid="uid://dv63bw561t75h" path="res://spells/scripts/bolt.png" id="1_aen5n"]
+[ext_resource type="Texture2D" uid="uid://dv63bw561t75h" path="res://spells/scripts/bolt.png" id="1_xluva"]
 
 [node name="EletricEffect" type="CPUParticles2D"]
 scale = Vector2(4, 4)
@@ -9,7 +9,7 @@ lifetime = 0.4
 speed_scale = 0.5
 explosiveness = 1.0
 fract_delta = false
-texture = ExtResource("1_aen5n")
+texture = ExtResource("1_xluva")
 particle_flag_align_y = true
 spread = 180.0
 gravity = Vector2(20, 50)

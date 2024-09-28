@@ -15,10 +15,13 @@ class_name Spell
 @export var knockback_force: float  # Força de empurrão aplicada aos inimigos atingidos
 @export var damage_over_time: int  # Dano por segundo durante a duração do efeito
 @export var heal_amount: int    # Quantidade de vida recuperada se o feitiço for curativo
-@onready var eletric_preload = preload("res://ElementalEffects/eletric_effect.tscn")
+@onready var electric_preload = preload("res://ElementalEffects/electric_effect.tscn")
 @onready var fire_preload = preload("res://ElementalEffects/fire_effect.tscn")
+
+
 func _process(delta: float) -> void:
 	position += direction.normalized() * delta * speed
+
 func checkColide(body):
 	if body.is_in_group("Enemy"):
 		if body.has_method("take_damage"):
@@ -27,42 +30,41 @@ func checkColide(body):
 				apply_knockback_force(body)
 			body.animation.play("hurt")
 			if elemental_type:
-				aplly_elemental(body,elemental_type)
+				apply_elemental(body,elemental_type)
 			
 				
 			#aqui é adicionado por exemplo efeitos a mais. farei o knockback de exemplo
 			
 			queue_free()
+
 func apply_knockback_force(body):
 	var knockback_direction = (body.global_position - global_position).normalized()
 	body.position += knockback_direction * knockback_force * get_process_delta_time()
-func aplly_elemental(body,elemental):
-	var eletric_effect = eletric_preload.instantiate()
+
+func apply_elemental(body,elemental):
+	var electric_effect = electric_preload.instantiate()
 	var fire_effect = fire_preload.instantiate()
-	if elemental == "eletric":
+	if elemental == "electric":
 		body.speed = 0
 		body.timer.wait_time = effect_duration
 		if body.health > 0:
-			eletric_effect.lifetime = effect_duration
+			electric_effect.lifetime = effect_duration
 			body.animation.play("hurt_shock")
-			eletric_effect.position = body.global_position
-			eletric_effect.one_shot = true
-			get_parent().add_child(eletric_effect)
+			electric_effect.position = body.global_position
+			electric_effect.one_shot = true
+			get_parent().add_child(electric_effect)
 			
 		body.shoke()
 	if elemental == "fire":
 		body.timer.wait_time = effect_duration
+		#var tickTimer = Timer.new()
+		#tickTimer.wait_time = 1.0
+		#tickTimer.one_shot = false
+		#tickTimer.start()
 		if body.health > 0:
 			fire_effect.lifetime = effect_duration
 			body.animation.play("hurt_shock")
 			fire_effect.position = body.global_position
 			fire_effect.one_shot = true
+			body.take_damage(damage_over_time)
 			get_parent().add_child(fire_effect)
-		
-		
-	
-		
-		
-		
-		
-	 

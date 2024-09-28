@@ -23,8 +23,9 @@ func _ready() -> void:
 
 func _process(delta: float) -> void:
 	pass
+
 func take_damage(damage):
 	health -= damage
 	if health <= 0:
 		queue_free()
-	health_bar.health = health
+	health_bar.value = health

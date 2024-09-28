@@ -8,8 +8,8 @@ func _ready():
 	cooldown_time = 1.0
 	knockback_force = 200.0
 	effect_duration = 0.5
-	elemental_type = "eletric"
+	elemental_type = "electric"
 
 
-func _on_eletric_body_entered(body):
+func _on_electric_body_entered(body):
 	checkColide(body)

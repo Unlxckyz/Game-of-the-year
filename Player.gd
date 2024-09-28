@@ -1,17 +1,18 @@
 extends CharacterBody2D
+
 @onready var sprite = $Rogues
 var speed = 200
 var eletricidade_preload = preload("res://spells/lightning_bolt.tscn")
 var fireblast_preload = preload("res://spells/fire_blast.tscn")
 var canShoot = true
 @onready var timer = $Timer
+
 func _process(delta):
 	var direction = Input.get_vector("left","right","up","down")
 	if direction.x > 0:
 		sprite.flip_h = true
 	if direction.x < 0:
 		sprite.flip_h = false
-		
 		
 	if direction != Vector2.ZERO:
 		direction = direction.normalized()
