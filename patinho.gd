@@ -6,12 +6,11 @@ extends Enemy
 @onready var timer = $Effect
 
 func _init():
-	maxHealth = 50
+	maxHealth = 500
 	health_bar = health_component
 	speed = 50
 	
 	
-
 
 func _process(delta):
 	var direction = (player.global_position - global_position).normalized()
