@@ -2,19 +2,19 @@ extends Node2D
 class_name Spell
 
 @export var spell_level: int
-@export var speed: float    # Velocidade do feitiço
-@export var direction: Vector2     # Direção do feitiço
-@export var base_damage: int      # Dano base do feitiço
-@export var range: float     # Alcance do feitiço
-@export var mana_cost: int     # Custo de mana 
-@export var cooldown_time: float  # Tempo de recarga 
+@export var speed: float
+@export var direction: Vector2
+@export var base_damage: int
+@export var range: float
+@export var mana_cost: int
+@export var cooldown_time: float
 @export var elemental_type: String
-@export var effect_duration: float  # Duração dos efeitos do feitiço
-@export var has_area_of_effect: bool # Se o feitiço possui área de efeito
-@export var can_pierce: bool    # Se o feitiço pode atravessar inimigos
-@export var knockback_force: float  # Força de empurrão aplicada aos inimigos atingidos
-@export var damage_over_time: int  # Dano por segundo durante a duração do efeito
-@export var heal_amount: int    # Quantidade de vida recuperada se o feitiço for curativo
+@export var effect_duration: float
+@export var has_area_of_effect: bool
+@export var can_pierce: bool
+@export var knockback_force: float
+@export var damage_over_time: int
+@export var heal_amount: int
 @onready var electric_preload = preload("res://ElementalEffects/electric_effect.tscn")
 @onready var fire_preload = preload("res://ElementalEffects/fire_effect.tscn")
 
@@ -31,10 +31,7 @@ func checkColide(body):
 			body.animation.play("hurt")
 			if elemental_type:
 				apply_elemental_effect(body,elemental_type)
-			
-				
 			#aqui é adicionado por exemplo efeitos a mais. farei o knockback de exemplo
-			
 			queue_free()
 
 func apply_knockback_force(target):

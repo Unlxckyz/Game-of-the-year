@@ -1,19 +1,45 @@
-[gd_scene load_steps=3 format=3 uid="uid://dqe5jwnnkuu62"]
+[gd_scene load_steps=5 format=3 uid="uid://dqe5jwnnkuu62"]
 
 [ext_resource type="Script" path="res://Player.gd" id="1_xltps"]
-[ext_resource type="Texture2D" uid="uid://dabxf2ik5bsud" path="res://assets/32rogues/rogues.png" id="2_sxv5i"]
+[ext_resource type="Texture2D" uid="uid://badwlwa4uctvk" path="res://assets/gotico_sprite_isom_frente_dir_esq.png" id="2_ubcce"]
+[ext_resource type="Texture2D" uid="uid://3i45mod1if6s" path="res://assets/Runes/Lightning_rune.png" id="3_b6bci"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_bk6av"]
+radius = 11.0
+height = 42.0
 
 [node name="Player" type="CharacterBody2D" groups=["Player"]]
 script = ExtResource("1_xltps")
 
 [node name="Rogues" type="Sprite2D" parent="." groups=["Player"]]
-texture = ExtResource("2_sxv5i")
-region_enabled = true
+texture = ExtResource("2_ubcce")
 region_rect = Rect2(65.7256, 0.344645, 28.2483, 30.4028)
 
 [node name="Camera2D" type="Camera2D" parent="."]
 zoom = Vector2(2.5, 2.5)
 
 [node name="Timer" type="Timer" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CapsuleShape2D_bk6av")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+self_modulate = Color(0, 0, 0, 1)
+layout_direction = 2
+anchors_preset = -1
+offset_left = -19.0
+offset_top = -53.0
+offset_right = 19.0
+offset_bottom = -35.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Rune_1" type="TextureRect" parent="HBoxContainer"]
+layout_mode = 2
+texture = ExtResource("3_b6bci")
+
+[node name="Rune_2" type="TextureRect" parent="HBoxContainer"]
+layout_mode = 2
+texture = ExtResource("3_b6bci")
 
 [connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
