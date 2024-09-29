@@ -31,11 +31,7 @@ func _ready() -> void:
 	health_bar.init_health(maxHealth)
 	currentHealth = maxHealth
 	#Se ele é target
-	if target:
-		add_child(timer)
-		timer.timeout.connect(Callable(self, "_on_timer_timeout"))
-		timer.wait_time = 1.0
-		timer.start()
+	
 		
 
 
@@ -51,14 +47,18 @@ func _process(delta: float) -> void:
 		timer.stop()
 
 func damageOverTime(body, _damage, time):
-	print("chegou")
+	print("chegou no over")
 	damage = _damage
 	target = body
 	duration = time
+	add_child(timer)
+	timer.timeout.connect(Callable(self, "_on_timer_timeout"))
+	timer.wait_time = 1.0
+	timer.start()
 	
 
 func _on_timer_timeout() -> void:
-	print("cheou aqqq")
+	print("ta dando damage por segundo")
 	if target and duration > 0:
 		target.take_damage(damage)
 		duration -= 1
