@@ -3,6 +3,7 @@ class_name Enemy
 @export var maxHealth : float
 @export var currentHealth : float
 @export var health_bar : HealthBar
+@export var label_for_status: Label
 @export var atk : float
 @export var damage_modifiers : Dictionary = {}
 @export var def : float
@@ -47,14 +48,22 @@ func take_damage(damage):
 func _process(delta: float) -> void:
 	pass
 
-func criaTimer(time,type,duration):
+func criaTimer(time,type):
 	if type == "damageOverTime":
 		var timer = Timer.new()
 		add_child(timer)
-		duration = duration
-		timer.timeout.connect(Callable(self, "_on_timer_timeout"))
+		timer.timeout.connect(Callable(self, "_on_timer_timeout").bind(1))
 		timer.wait_time = time
+		timer.start()	
+	elif type == "paralyze":
+		var timer = Timer.new()
+		add_child(timer)
+		timer.timeout.connect(Callable(self, "_on_timer_timeout").bind(2))
+		timer.wait_time = time
+		self.speed = 0
+		timer.one_shot = true
 		timer.start()
+		
 		
 	
 	
@@ -63,38 +72,35 @@ func damageOverTime(body, _damage, time):
 	damage = _damage
 	target = body
 	duration += time
-	criaTimer(1.0,"damageOverTime",duration)
+	criaTimer(1.0,"damageOverTime")
 func speed_reduction(body,reduction,time):
 	print("chegou na reduçao")
-	body.speed = reduction
-	criaTimer(time,"SpeedReduction",time)
+	criaTimer(time,"paralyze")
 	
-func _on_timer_timeout_debuffs():
-	if target and duration:
-		duration -= 0
-		target = statusAntigos
-	if duration == 0:
-		timer.stop()
-		target = null
+	
+
+
+func _on_timer_timeout(type) -> void:
+	if type == 1:
+		if target and duration and damage > 0:
+			target.take_damage(damage)
+			duration -= 1
+
+	if duration == 0 and target:
 		
-	
-
-func _on_timer_timeout() -> void:
-	if target and duration and damage > 0:
-		target.take_damage(damage)
-		duration -= 1
-
-	elif duration == 0:
-		print("terminou")
 		timer.stop()
+		target.speed = 200
 		target = null
 		damage = 0
+	if type == 2:
+		self.speed = 50
+	
+
 
 func apply_status(target,effect_data):
 	if effect_data.has("damage_over_time") and effect_data["damage_over_time"] != null:
 		damageOverTime(target,effect_data["damage_over_time"],effect_data["effect_duration"])
 	if effect_data.has("speed_reduction"):
 		if effect_data["speed_reduction"] > 0:
-			speed_reduction(target,effect_data["speed_reduction"],effect_data["effect_duration"])
-		
+			criaTimer(effect_data["effect_duration"],"paralyze")
 		

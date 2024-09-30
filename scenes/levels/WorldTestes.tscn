@@ -1,5 +1,6 @@
-[gd_scene load_steps=6 format=3 uid="uid://fmpa756nwafp"]
+[gd_scene load_steps=8 format=3 uid="uid://fmpa756nwafp"]
 
+[ext_resource type="Script" path="res://scenes/levels/world_testes.gd" id="1_jorj2"]
 [ext_resource type="Texture2D" uid="uid://ldub08n3jolf" path="res://assets/2D Pixel Dungeon Asset Pack/character and tileset/Dungeon_Tileset.png" id="3_1sxkv"]
 [ext_resource type="PackedScene" uid="uid://dqe5jwnnkuu62" path="res://player.tscn" id="4_568ye"]
 [ext_resource type="PackedScene" uid="uid://n4qduriikbhb" path="res://scenes/characters/Enemies/patinho.tscn" id="5_utwlj"]
@@ -110,7 +111,14 @@ texture = ExtResource("3_1sxkv")
 [sub_resource type="TileSet" id="TileSet_7epka"]
 sources/0 = SubResource("TileSetAtlasSource_kbkie")
 
+[sub_resource type="Curve2D" id="Curve2D_kas0f"]
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, 272, 160, 0, 0, 0, 0, 279, 553, 0, 0, 0, 0, 903, 547, 0, 0, 0, 0, 898, 165, 0, 0, 0, 0, 272, 160)
+}
+point_count = 5
+
 [node name="WorldTestes" type="Node2D"]
+script = ExtResource("1_jorj2")
 
 [node name="TileMap" type="TileMap" parent="."]
 tile_set = SubResource("TileSet_7epka")
@@ -128,3 +136,11 @@ position = Vector2(609, 368)
 
 [node name="Patinho" parent="." instance=ExtResource("5_utwlj")]
 position = Vector2(617, 273)
+
+[node name="caminho_spawn" type="Path2D" parent="."]
+curve = SubResource("Curve2D_kas0f")
+
+[node name="Linha_spawn" type="PathFollow2D" parent="caminho_spawn"]
+position = Vector2(272.857, 208.142)
+rotation = 1.55299
+progress = 48.15

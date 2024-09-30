@@ -24,6 +24,10 @@ project/assembly_name="Game Of The Year"
 Enemy=""
 Player=""
 
+[gui]
+
+theme/custom_font="res://assets/fonts/ThaleahFat.ttf"
+
 [input]
 
 up={
