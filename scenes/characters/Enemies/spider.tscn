@@ -1,14 +1,14 @@
 [gd_scene load_steps=14 format=3 uid="uid://n4qduriikbhb"]
 
-[ext_resource type="Script" path="res://patinho.gd" id="1_6mflt"]
+[ext_resource type="Script" path="res://spider.gd" id="1_6mflt"]
 [ext_resource type="Shader" path="res://scenes/characters/Enemies/hit_blink.gdshader" id="1_y7yax"]
-[ext_resource type="Texture2D" uid="uid://bnclh7kff40tp" path="res://assets/32rogues/animals.png" id="2_w8v6p"]
 [ext_resource type="PackedScene" uid="uid://dqwisknycuqg5" path="res://scenes/ui/health_component.tscn" id="3_7m618"]
+[ext_resource type="Texture2D" uid="uid://nrd5l7ojgdg0" path="res://assets/32rogues/monsters.png" id="3_saw0o"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_owijb"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_mw2cg"]
-radius = 41.1096
+radius = 52.0
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_mneij"]
 shader = ExtResource("1_y7yax")
@@ -125,9 +125,9 @@ _data = {
 }
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_u5wh4"]
-radius = 56.0
+radius = 58.4209
 
-[node name="Patinho" type="CharacterBody2D" node_paths=PackedStringArray("health_bar") groups=["Enemy"]]
+[node name="Spider" type="CharacterBody2D" node_paths=PackedStringArray("health_bar") groups=["Enemy"]]
 material = SubResource("ShaderMaterial_owijb")
 collision_layer = 2
 collision_mask = 2
@@ -136,16 +136,16 @@ script = ExtResource("1_6mflt")
 health_bar = NodePath("HealthComponent")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(-10, 10)
+position = Vector2(2, 2)
 shape = SubResource("CircleShape2D_mw2cg")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 material = SubResource("ShaderMaterial_mneij")
 rotation = 0.261799
 scale = Vector2(5.21429, 5.21429)
-texture = ExtResource("2_w8v6p")
+texture = ExtResource("3_saw0o")
 region_enabled = true
-region_rect = Rect2(69.5451, 458.54, 22.7821, 21.1792)
+region_rect = Rect2(291.656, 203.844, 22.3025, 16.9067)
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
@@ -157,17 +157,33 @@ speed_scale = 8.0
 [node name="Area2D" type="Area2D" parent="."]
 
 [node name="collsion_area" type="CollisionShape2D" parent="Area2D"]
-position = Vector2(-10, 1)
+visible = false
 shape = SubResource("CircleShape2D_u5wh4")
 debug_color = Color(0.770103, 1.44392e-06, 0.396343, 0.42)
 
 [node name="HealthComponent" parent="." instance=ExtResource("3_7m618")]
-offset_left = -62.0
-offset_right = 34.0
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -48.0
+offset_top = 44.0
+offset_right = 48.0
+offset_bottom = 48.0
+grow_horizontal = 2
+grow_vertical = 2
 
 [node name="Effect" type="Timer" parent="."]
 wait_time = 0.5
 one_shot = true
+
+[node name="Label" type="Label" parent="."]
+offset_left = -30.0
+offset_top = -63.0
+offset_right = 33.0
+offset_bottom = -48.0
+text = "Paralyze"
 
 [connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]
 [connection signal="timeout" from="Effect" to="." method="_on_effect_timeout"]

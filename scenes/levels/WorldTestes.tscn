@@ -2,7 +2,7 @@
 
 [ext_resource type="Texture2D" uid="uid://ldub08n3jolf" path="res://assets/2D Pixel Dungeon Asset Pack/character and tileset/Dungeon_Tileset.png" id="3_1sxkv"]
 [ext_resource type="PackedScene" uid="uid://dqe5jwnnkuu62" path="res://player.tscn" id="4_568ye"]
-[ext_resource type="PackedScene" uid="uid://n4qduriikbhb" path="res://scenes/characters/Enemies/patinho.tscn" id="5_utwlj"]
+[ext_resource type="PackedScene" uid="uid://n4qduriikbhb" path="res://scenes/characters/Enemies/spider.tscn" id="5_utwlj"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_kbkie"]
 texture = ExtResource("3_1sxkv")

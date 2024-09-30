@@ -21,6 +21,7 @@ class_name Enemy
 @export var animation_player : AnimationPlayer
 
 #Variaveis para controle de danos
+var label = Label.new()
 var timer = Timer.new()
 var damage: int = 0
 var target = null
@@ -32,9 +33,11 @@ func _ready() -> void:
 	currentHealth = maxHealth
 	#Se ele é target
 	
-		
+func showStatus(text,time):
+	self.label.text = text
+	criaTimer(time,null,true)
 
-
+	
 func take_damage(damage):
 	currentHealth -= damage
 	if currentHealth <= 0:
@@ -45,25 +48,46 @@ func take_damage(damage):
 func _process(delta: float) -> void:
 	if not target:
 		timer.stop()
-
-func damageOverTime(body, _damage, time):
-	print("chegou no over")
-	damage = _damage
-	target = body
-	duration = time
+func criaTimer(time,type = null,loop = true):
 	add_child(timer)
-	timer.timeout.connect(Callable(self, "_on_timer_timeout"))
-	timer.wait_time = 1.0
+	timer.wait_time = time
+	if type == "dmgOverTime":
+		timer.timeout.connect(Callable(self, "_on_timer_timeout").bind(1))
+		self.showStatus("Queimando",1.0)
+		
+	if "speed":
+		timer.timeout.connect(Callable(self, "_on_timer_timeout").bind(2))
+		timer.one_shot = true
+		self.speed = 0
 	timer.start()
+		
+		
 	
+	
+func damageOverTime(_target,effect_data):
+	print("chegou no over")
+	damage = effect_data["damage_over_time"]
+	target = _target
+	duration += effect_data["effect_duration"]
+	criaTimer(1.0,"dmgOverTime")
+func paralize(target,time):
+	print("paralizou")
+	criaTimer(time,"speed",false)
 
-func _on_timer_timeout() -> void:
-	print("ta dando damage por segundo")
-	if target and duration > 0:
-		target.take_damage(damage)
-		duration -= 1
+func _on_timer_timeout(int) -> void:
+	if 1:
+		if target and duration > 0:
+			print("chegou aq")
+			target.label.text("Queimando")
+			target.take_damage(damage)
+			duration -= 1
 		
 
-	elif duration == 0:
-		timer.stop()
-		target = null  # Limpa o alvo após o término
+		elif duration == 0:
+			timer.stop()
+			target = null  # Limpa o alvo após o término
+	if 2:
+		self.speed = 50	
+func apply_status(target,effect_data):
+	if effect_data.has("damage_over_time"):
+		damageOverTime(target,effect_data)
