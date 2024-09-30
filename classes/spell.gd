@@ -51,7 +51,7 @@ func create_elemental_effect(element_type):
 	if element_type == "electric":
 		effect = {
 			"speed_reduction": 0,
-			"damage_over_time": null,
+			"damage_over_time": 0,
 			"effect_duration": effect_duration,
 			"visual_effect": electric_preload,
 			"animation": "hurt_shoke"

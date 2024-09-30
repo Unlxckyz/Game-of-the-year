@@ -32,10 +32,6 @@ func _ready() -> void:
 	currentHealth = maxHealth
 	#Se ele é target
 	
-		
-
-
-	
 func take_damage(damage):
 	currentHealth -= damage
 	if currentHealth <= 0:
@@ -55,8 +51,7 @@ func criaTimer(time,type):
 	if "speed":
 		add_child(timer)
 		timer.timeout.connect(Callable(self, "_on_timer_timeout").bind(2))
-		timer.wait_time = time
-		timer.one_shot = true
+		timer.wait_time = 1.0
 		self.speed = 0
 		timer.start()
 		
@@ -65,9 +60,9 @@ func criaTimer(time,type):
 	
 func damageOverTime(_target,effect_data):
 	print("chegou no over")
-	damage = 8
+	damage = effect_data["damage_over_time"]
 	target = _target
-	duration += 2
+	duration += effect_data["effect_duration"]
 	criaTimer(1.0,"dmgOverTime")
 func paralize(target,time):
 	print("paralizou")
