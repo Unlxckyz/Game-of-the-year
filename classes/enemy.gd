@@ -1,6 +1,6 @@
 extends Node2D
 class_name Enemy
-
+@export var labelStatus = Label
 @export var maxHealth : float
 @export var currentHealth : float
 @export var health_bar : HealthBar
@@ -21,7 +21,6 @@ class_name Enemy
 @export var animation_player : AnimationPlayer
 
 #Variaveis para controle de danos
-var label = Label.new()
 var timer = Timer.new()
 var damage: int = 0
 var target = null
@@ -33,9 +32,8 @@ func _ready() -> void:
 	currentHealth = maxHealth
 	#Se ele é target
 	
-func showStatus(text,time):
-	self.label.text = text
-	criaTimer(time,null,true)
+		
+
 
 	
 func take_damage(damage):
@@ -48,37 +46,37 @@ func take_damage(damage):
 func _process(delta: float) -> void:
 	if not target:
 		timer.stop()
-func criaTimer(time,type = null,loop = true):
-	add_child(timer)
-	timer.wait_time = time
+func criaTimer(time,type):
 	if type == "dmgOverTime":
+		add_child(timer)
 		timer.timeout.connect(Callable(self, "_on_timer_timeout").bind(1))
-		self.showStatus("Queimando",1.0)
-		
+		timer.wait_time = time
+		timer.start()
 	if "speed":
+		add_child(timer)
 		timer.timeout.connect(Callable(self, "_on_timer_timeout").bind(2))
+		timer.wait_time = time
 		timer.one_shot = true
 		self.speed = 0
-	timer.start()
+		timer.start()
 		
 		
 	
 	
 func damageOverTime(_target,effect_data):
 	print("chegou no over")
-	damage = effect_data["damage_over_time"]
+	damage = 8
 	target = _target
-	duration += effect_data["effect_duration"]
+	duration += 2
 	criaTimer(1.0,"dmgOverTime")
 func paralize(target,time):
 	print("paralizou")
-	criaTimer(time,"speed",false)
+	criaTimer(time,"speed")
 
 func _on_timer_timeout(int) -> void:
 	if 1:
 		if target and duration > 0:
 			print("chegou aq")
-			target.label.text("Queimando")
 			target.take_damage(damage)
 			duration -= 1
 		

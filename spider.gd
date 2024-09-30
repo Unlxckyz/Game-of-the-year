@@ -10,7 +10,6 @@ func _init():
 	maxHealth = hp
 	health_bar = health_component
 	speed = 50
-	#label = _label.text
 	
 	
 
