@@ -44,14 +44,13 @@ func apply_elemental_effect(target, element_type):
 	if effect_data:
 		apply_status_effect(target, effect_data)
 		apply_visual_effect(target, effect_data)
-		apply_damage_over_time(target, effect_data)
 
 func create_elemental_effect(element_type):
 	var effect = {}
 	if element_type == "electric":
 		effect = {
-			"speed_reduction": 0,
-			"damage_over_time": damage_over_time,
+			"speed_reduction": 1,
+			"damage_over_time": null,
 			"effect_duration": effect_duration,
 			"visual_effect": electric_preload,
 			"animation": "hurt_shoke"
@@ -67,22 +66,12 @@ func create_elemental_effect(element_type):
 	return effect
 
 func apply_status_effect(target, effect_data):
-	if effect_data.has("speed_reduction"):
-		target.speed -= effect_data["speed_reduction"]
 	if target.has_method("apply_status"):
-		target.apply_status(effect_data)
+		target.apply_status(target,effect_data)
 
 func apply_visual_effect(target, effect_data):
 	var visual_instance = effect_data["visual_effect"].instantiate()
-	visual_instance.lifetime = effect_data["effect_duration"]
 	visual_instance.position = target.global_position
 	visual_instance.one_shot = true
 	get_parent().add_child(visual_instance)
 	target.animation.play(effect_data["animation"])
-
-func apply_damage_over_time(target, effect_data):
-	if effect_data.has("damage_over_time"):
-		target.timer.wait_time = effect_data["effect_duration"]
-		
-		
-		target.damageOverTime(target,damage_over_time,effect_duration)	

@@ -4,8 +4,8 @@
 
 [node name="FireEffect" type="CPUParticles2D"]
 scale = Vector2(4, 4)
-amount = 10
-lifetime = 0.4
+amount = 5
+lifetime = 0.2
 speed_scale = 0.5
 explosiveness = 1.0
 fract_delta = false

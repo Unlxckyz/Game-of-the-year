@@ -1,12 +1,17 @@
 extends CharacterBody2D
 
 @onready var sprite = $Rogues
+var hp = 100
 var speed = 200
 var lightning_bolt_preload = preload("res://spells/lightning_bolt.tscn")
 var fireblast_preload = preload("res://spells/fire_blast.tscn")
 var canShoot = true
 @onready var timer = $Timer
+@onready var health_bar = $HealthBar
 
+func _ready() -> void:
+	health_bar.health = hp
+	health_bar.max_value = hp
 func _process(delta):
 	handleMovement()
 	handleCasting()

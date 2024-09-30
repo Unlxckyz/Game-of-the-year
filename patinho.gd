@@ -5,7 +5,8 @@ extends Enemy
 @onready var player = get_tree().get_first_node_in_group("Player")
 
 func _init():
-	maxHealth = 50
+	maxHealth = 100
+	
 	health_bar = health_component
 	speed = 50
 	

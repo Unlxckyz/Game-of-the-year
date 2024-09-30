@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://dqe5jwnnkuu62"]
+[gd_scene load_steps=10 format=3 uid="uid://dqe5jwnnkuu62"]
 
 [ext_resource type="Script" path="res://Player.gd" id="1_xltps"]
 [ext_resource type="Texture2D" uid="uid://badwlwa4uctvk" path="res://assets/gotico_sprite_isom_frente_dir_esq.png" id="2_ubcce"]
@@ -7,6 +7,7 @@
 [ext_resource type="Texture2D" uid="uid://bv1dl3onlx83i" path="res://assets/Runes/Water_rune.png" id="5_34ykb"]
 [ext_resource type="Texture2D" uid="uid://bdss3sekphfqv" path="res://assets/Runes/Earth_rune.png" id="6_5cpf7"]
 [ext_resource type="Texture2D" uid="uid://clr86k8365maw" path="res://assets/Runes/Poison_rune.png" id="7_g831c"]
+[ext_resource type="PackedScene" uid="uid://dqwisknycuqg5" path="res://scenes/ui/health_component.tscn" id="8_4qsfv"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_bk6av"]
 radius = 11.0
@@ -23,6 +24,7 @@ region_rect = Rect2(65.7256, 0.344645, 28.2483, 30.4028)
 zoom = Vector2(2.5, 2.5)
 
 [node name="Timer" type="Timer" parent="."]
+wait_time = 0.2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CapsuleShape2D_bk6av")
@@ -54,5 +56,18 @@ texture = ExtResource("6_5cpf7")
 [node name="Rune_5" type="TextureRect" parent="HBoxContainer"]
 layout_mode = 2
 texture = ExtResource("7_g831c")
+
+[node name="HealthBar" parent="." instance=ExtResource("8_4qsfv")]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = 12.5
+offset_right = 20.0
+offset_bottom = 13.5
+grow_horizontal = 2
+grow_vertical = 2
 
 [connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
