@@ -42,11 +42,11 @@ func take_damage(damage):
 func _process(delta: float) -> void:
 	if not target:
 		timer.stop()
-func criaTimer(time,type):
+func createTimer(time,type):
 	if type == "dmgOverTime":
 		add_child(timer)
 		timer.timeout.connect(Callable(self, "_on_timer_timeout").bind(1))
-		timer.wait_time = time
+		timer.wait_time = time 
 		timer.start()
 	if "speed":
 		add_child(timer)
@@ -59,19 +59,16 @@ func criaTimer(time,type):
 	
 	
 func damageOverTime(_target,effect_data):
-	print("chegou no over")
 	damage = effect_data["damage_over_time"]
 	target = _target
 	duration += effect_data["effect_duration"]
-	criaTimer(1.0,"dmgOverTime")
+	createTimer(1.0,"dmgOverTime")
 func paralize(target,time):
-	print("paralizou")
-	criaTimer(time,"speed")
+	createTimer(time,"speed")
 
 func _on_timer_timeout(int) -> void:
 	if 1:
 		if target and duration > 0:
-			print("chegou aq")
 			target.take_damage(damage)
 			duration -= 1
 		
@@ -80,7 +77,10 @@ func _on_timer_timeout(int) -> void:
 			timer.stop()
 			target = null  # Limpa o alvo após o término
 	if 2:
-		self.speed = 50	
+		self.speed = 50
 func apply_status(target,effect_data):
 	if effect_data.has("damage_over_time"):
 		damageOverTime(target,effect_data)
+	if effect_data.has("speed_reduction"):
+		paralize(target,effect_data["speed_reduction"])
+		
