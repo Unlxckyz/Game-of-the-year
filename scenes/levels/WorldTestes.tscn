@@ -143,3 +143,9 @@ curve = SubResource("Curve2D_x78wh")
 [node name="PathFollow2D" type="PathFollow2D" parent="Path2D"]
 position = Vector2(3, 3)
 rotation = 1.57393
+
+[node name="Timer_spawn" type="Timer" parent="."]
+wait_time = 5.0
+autostart = true
+
+[connection signal="timeout" from="Timer_spawn" to="." method="_on_timer_spawn_timeout"]

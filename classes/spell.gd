@@ -72,7 +72,6 @@ func apply_status_effect(target, effect_data):
 
 func apply_visual_effect(target, effect_data):
 	var visual_instance = effect_data["visual_effect"].instantiate()
-	visual_instance.lifetime = effect_data["effect_duration"]
 	visual_instance.position = target.global_position
 	visual_instance.one_shot = true
 	get_parent().add_child(visual_instance)

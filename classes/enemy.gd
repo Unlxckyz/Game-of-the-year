@@ -19,6 +19,7 @@ class_name Enemy
 @export var is_boss : bool
 @export var is_elite: bool
 @export var animation_player : AnimationPlayer
+@export var xingamentos = ["vai toma no cu porra", "vai se fuder","vai bate na mãe caralho","corno","viado","chupa cu"]
 
 #Variaveis para controle de danos
 var timer = Timer.new()
@@ -33,10 +34,10 @@ func _ready() -> void:
 	#Se ele é target
 	
 func take_damage(damage):
+	print("Dano da spell: ", damage)
 	currentHealth -= damage
 	if currentHealth <= 0:
 		queue_free()
-	print(damage)
 	health_bar.health = currentHealth
 
 func _process(delta: float) -> void:
@@ -48,15 +49,21 @@ func createTimer(time,type):
 		timer.timeout.connect(Callable(self, "_on_timer_timeout").bind(1))
 		timer.wait_time = time 
 		timer.start()
-	if "speed":
+	if type == "speed":
 		add_child(timer)
 		timer.timeout.connect(Callable(self, "_on_timer_timeout").bind(2))
+		target.shoke()
 		timer.wait_time = 1.0
 		self.speed = 0
+		target.showLabel("Paralyzed")
 		timer.start()
 		
 		
 	
+func randomText(text):
+	randomize()
+	var indice_text = randi() % text.size()
+	return text[indice_text]
 	
 func damageOverTime(_target,effect_data):
 	damage = effect_data["damage_over_time"]
@@ -81,6 +88,6 @@ func _on_timer_timeout(int) -> void:
 func apply_status(target,effect_data):
 	if effect_data.has("damage_over_time"):
 		damageOverTime(target,effect_data)
-	if effect_data.has("speed_reduction"):
+	if effect_data["speed_reduction"] > 0:
 		paralize(target,effect_data["speed_reduction"])
 		
