@@ -7,10 +7,30 @@ var fireblast_preload = preload("res://spells/fire_blast.tscn")
 var canShoot = true
 @onready var timer = $Timer
 
+var start_color: Color = Color8(231, 168, 40, 208)
+var end_color: Color = Color8(175, 170, 251, 208)
+
+var transition_speed: float = 0.7
+var transition_progress: float = 0.0
+var is_forward: bool = true
+
 func _process(delta):
 	handleMovement()
 	handleCasting()
-	
+
+	if is_forward:
+		transition_progress += delta * transition_speed
+	else:
+		transition_progress -= delta * transition_speed
+
+	transition_progress = clamp(transition_progress, 0.0, 1.0)
+	var current_color: Color = Color(lerp(start_color, end_color, transition_progress))
+	modulate = current_color
+
+	if transition_progress == 1.0:
+		is_forward = false
+	elif transition_progress == 0.0:
+		is_forward = true
 
 func shoot(projectile_scene):
 	var projectile_instance = projectile_scene.instantiate()
